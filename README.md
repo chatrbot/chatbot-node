@@ -11,4 +11,4 @@
 2. 安装相关依赖库
    `npm i` 或者 `yarn install`
 3. 替换代码(src/app.ts)中的`token`([如何获取我的 token](https://github.com/chatrbot/chatbot#faq)),然后运行  
-   `npx node-ts src/app.ts`
+   `npx ts-node src/app.ts`
