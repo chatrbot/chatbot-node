@@ -1,24 +1,7 @@
 import WebSocket from 'ws'
 import { Plugin } from './plugins'
 import { Request } from './request'
-
-export interface ReceiveMessage {
-    msgType: number
-    msgId: number
-    createTime: number
-    pushContent: string
-    msgSource: string
-    reportMsgType: number
-    toUser: string
-    imgBuf?: any
-    clientUserName: string
-    content: string
-    newMsgId: number
-    atList: any[]
-    clientId: string
-    fromUser: string
-    msgSeq: number
-}
+import { PushMessage } from './define'
 
 export class ChatBot {
     private readonly host: string
@@ -49,9 +32,9 @@ export class ChatBot {
             })
             this.ws.on('message', (data) => {
                 console.log('收到新的消息', data)
-                const msg: ReceiveMessage = JSON.parse(data as string)
+                const msg: PushMessage = JSON.parse(data as string)
                 this.plugins.map((plugin) => {
-                    plugin.do(msg)
+                    plugin.do(msg, data as string)
                 })
             })
             this.ws.on('close', async () => {
@@ -60,7 +43,7 @@ export class ChatBot {
                 }
                 console.log('连接断开，5s后重连')
                 await new Promise((resolve) =>
-                    setTimeout(() => resolve(), 5000)
+                    setTimeout(() => resolve(null), 5000)
                 )
                 console.log('开始重连')
                 await this.init()
@@ -70,7 +53,9 @@ export class ChatBot {
             })
         } catch (err) {
             console.log('连接websocket失败:' + err)
-            await new Promise((resolve) => setTimeout(() => resolve(), 5000))
+            await new Promise((resolve) =>
+                setTimeout(() => resolve(null), 5000)
+            )
             await this.init()
         }
     }
@@ -79,15 +64,43 @@ export class ChatBot {
         this.plugins.push(...p)
     }
 
-    sendText(toUser: string, content: string) {
-        return this.request.sendTextMessage(toUser, content)
+    sendText(toUser: string, content: string, atList: string[] = []) {
+        return this.request.sendTextMessage(toUser, content, atList)
     }
 
     sendPic(toUser: string, imgUrl: string) {
         return this.request.sendPicMessage(toUser, imgUrl)
     }
 
-    sendEmoji(toUser: string, gifUrl: string) {
-        return this.request.sendEmojiMessage(toUser, gifUrl)
+    sendEmoji(toUser: string, md5: string, emojiLen: string) {
+        return this.request.sendEmojiMessage(toUser, md5, emojiLen)
+    }
+
+    sendVideo(toUser: string, videoUrl: string, thumbUrl: string) {
+        return this.request.sendVideoMessage(toUser, videoUrl, thumbUrl)
+    }
+
+    sendVoice(toUser: string, silkUrl: string) {
+        return this.request.sendVoiceMessage(toUser, silkUrl)
+    }
+
+    downloadPic(xml: string) {
+        return this.request.downloadPic(xml)
+    }
+
+    downloadVideo(xml: string) {
+        return this.request.downloadVideo(xml)
+    }
+
+    downloadVoice(newMsgId: string, xml: string) {
+        return this.request.downloadVoice(newMsgId, xml)
+    }
+
+    downloadEmoji(xml: string) {
+        return this.request.downloadEmoji(xml)
+    }
+
+    parseEmojiXML(xml: string) {
+        return this.request.parseEmojiXML(xml)
     }
 }
