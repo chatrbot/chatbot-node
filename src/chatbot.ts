@@ -10,6 +10,7 @@ export class ChatBot {
     private ws: WebSocket | undefined
     private request: Request
     private plugins: Plugin[] = []
+    private heartBeatTimer: NodeJS.Timer | undefined
 
     constructor(host: string, token: string) {
         this.host = host
@@ -29,8 +30,18 @@ export class ChatBot {
             )
             this.ws.on('open', () => {
                 console.log('连接websocket成功')
+                if (this.ws?.readyState === 1) {
+                    this.heartBeatTimer = setInterval(() => {
+                        this.ws?.send('ping')
+                    }, 10000)
+                } else {
+                    console.log('ws is not ready')
+                }
             })
             this.ws.on('message', (data) => {
+                if (data === 'pong') {
+                    return
+                }
                 console.log('收到新的消息', data)
                 const msg: PushMessage = JSON.parse(data as string)
                 this.plugins.map((plugin) => {
@@ -40,6 +51,9 @@ export class ChatBot {
             this.ws.on('close', async (code: number) => {
                 if (this.ws) {
                     this.ws.close()
+                }
+                if (this.heartBeatTimer) {
+                    clearInterval(this.heartBeatTimer)
                 }
                 console.log('连接断开，5s后重连' + ' closeEvent code:' + code)
                 await new Promise((resolve) =>
