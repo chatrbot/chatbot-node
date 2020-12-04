@@ -37,19 +37,19 @@ export class ChatBot {
                     plugin.do(msg, data as string)
                 })
             })
-            this.ws.on('close', async () => {
+            this.ws.on('close', async (code: number) => {
                 if (this.ws) {
                     this.ws.close()
                 }
-                console.log('连接断开，5s后重连')
+                console.log('连接断开，5s后重连' + ' closeEvent code:' + code)
                 await new Promise((resolve) =>
                     setTimeout(() => resolve(null), 5000)
                 )
                 console.log('开始重连')
                 await this.init()
             })
-            this.ws.on('error', () => {
-                console.log('on error')
+            this.ws.on('error', (err: Error) => {
+                console.log('on error:', err)
             })
         } catch (err) {
             console.log('连接websocket失败:' + err)
