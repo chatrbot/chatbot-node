@@ -217,4 +217,22 @@ export class Request {
         })
         return info
     }
+
+    //parseEmoji 解析表情消息用来转发
+    async delGroupMembers(group: string, members: string[]) {
+        try {
+            const rsp = await this.http.post(
+                this.generateUrl('/api/v1/chatroom/delChatRoomMember'),
+                {
+                    chatroom: group,
+                    memberList: members
+                }
+            )
+            if (rsp) {
+                return rsp
+            }
+        } catch (err) {
+            throw new Error('删除群成员失败:' + err)
+        }
+    }
 }

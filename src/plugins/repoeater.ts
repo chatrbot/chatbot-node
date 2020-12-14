@@ -26,8 +26,6 @@ export class RepeaterPlugin extends Plugin {
                             '@' + data.whoAtBot + ' 叫我干嘛',
                             [data.groupMember]
                         )
-                    } else {
-                        this.bot.sendText(data.fromUser, '你好')
                     }
                     break
                 //图片消息

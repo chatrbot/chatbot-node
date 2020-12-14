@@ -15,12 +15,12 @@ export interface PushMessage {
 }
 
 //收到的转发消息具体分类
-export const enum MsgType {
-    MsgTypeText = 1, //文本消息
-    MsgTypeImage = 3, //图片消息
-    MsgTypeVoice = 34, //语音消息
-    MsgTypeVideo = 43, //视频消息
-    MsgTypeEmoji = 47 //表情动图消息
+export const MsgType = {
+    MsgTypeText: 1, //文本消息
+    MsgTypeImage: 3, //图片消息
+    MsgTypeVoice: 34, //语音消息
+    MsgTypeVideo: 43, //视频消息
+    MsgTypeEmoji: 47 //表情动图消息
 }
 
 //UserMessage 机器人转发的消息

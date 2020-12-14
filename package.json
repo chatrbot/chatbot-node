@@ -6,6 +6,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-typescript": "^7.12.7",
+    "@types/commander": "^2.12.2",
     "@types/node": "^14.14.10",
     "@types/ws": "^7.4.0",
     "@types/xml2js": "^0.4.7",
@@ -21,6 +22,7 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "commander": "^6.2.1",
     "ws": "^7.4.0",
     "xml2js": "^0.4.23"
   }

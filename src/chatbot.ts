@@ -117,4 +117,8 @@ export class ChatBot {
     parseEmojiXML(xml: string) {
         return this.request.parseEmojiXML(xml)
     }
+
+    delGroupMembers(group: string, members: string[]) {
+        return this.request.delGroupMembers(group, members)
+    }
 }
