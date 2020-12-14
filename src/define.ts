@@ -23,6 +23,12 @@ export const MsgType = {
     MsgTypeEmoji: 47 //表情动图消息
 }
 
+export const GroupRole = {
+    Member: 1,
+    Admin: 2,
+    Owner: 3
+}
+
 //UserMessage 机器人转发的消息
 export interface UserMessage {
     //消息id,只有在下载音频文件时候会用到
@@ -50,9 +56,13 @@ export interface UserMessage {
     //以下三个字段是群内消息才会用到
     //whoAtBot 谁@了机器人,显示的是用户昵称
     //groupMember 群内说话人的微信id
+    //groupMember 群内说话人的微信昵称
+    //groupMemberRole 群内说话人的身份
     //groupContent 群内消息主体
     whoAtBot: string
     groupMember: string
+    groupMemberNickname: string
+    groupMemberRole: number
     groupContent: string
 }
 

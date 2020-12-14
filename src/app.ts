@@ -1,5 +1,5 @@
 import { ChatBot } from './chatbot'
-import { GroupPlugin, RepeaterPlugin } from './plugins/'
+import { GroupPlugin } from './plugins/'
 import * as Commander from 'commander'
 
 // 从这里获取token https://github.com/chatrbot/chatbot#faq
@@ -19,8 +19,7 @@ if (!program.token || !program.host) {
 const bot = new ChatBot(program.host, program.token)
 //插件
 const group = new GroupPlugin(bot)
-const repeater = new RepeaterPlugin(bot)
 
-bot.use(repeater, group)
+bot.use(group)
 
 bot.start()

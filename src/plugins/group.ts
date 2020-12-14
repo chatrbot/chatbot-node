@@ -9,7 +9,7 @@ import {
     PushMsgType,
     UserMessage
 } from '../define'
-import { IsGroupMessage, SplitAtContent } from '../utils'
+import { IsGroupMessage, SplitAtContent, IsGroupMember } from '../utils'
 
 export class GroupPlugin extends Plugin {
     constructor(bot: ChatBot) {
@@ -26,14 +26,32 @@ export class GroupPlugin extends Plugin {
                 IsGroupMessage(data.fromUser) &&
                 SplitAtContent(data.groupContent) === keyword
             ) {
-                this.bot
-                    .delGroupMembers(data.fromUser, data.atList)
-                    .then(() => {
-                        console.log('删除群成员成功')
-                    })
-                    .catch((err) => {
-                        console.log('删除群成员失败', err)
-                    })
+                if (!IsGroupMember(data.groupMemberRole)) {
+                    this.bot
+                        .delGroupMembers(data.fromUser, data.atList)
+                        .then(() => {
+                            this.bot.sendText(
+                                data.fromUser,
+                                '@' + data.groupMemberNickname + ' 搞定了老板',
+                                [data.groupMember]
+                            )
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                } else {
+                    this.bot
+                        .sendText(
+                            data.fromUser,
+                            '@' +
+                                data.groupMemberNickname +
+                                ' 你不是管理员,休想命令我',
+                            [data.groupMember]
+                        )
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                }
             }
         }
         if (msg.msgType === PushMsgType.Event) {

@@ -1,4 +1,4 @@
-import { UserMessage } from './define'
+import { UserMessage, GroupRole } from './define'
 
 //用来判断是否是群聊消息
 export const IsGroupMessage = (fromUser: string) => {
@@ -32,4 +32,8 @@ export const SplitAtContent = (msgContent: string) => {
         content = contents[1].trim()
     }
     return content
+}
+
+export const IsGroupMember = (role: number) => {
+    return role == GroupRole.Member
 }
