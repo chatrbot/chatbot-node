@@ -10,5 +10,6 @@
    `git clone https://github.com/chatrbot/chatbot-node`
 2. 安装相关依赖库
    `npm i` 或者 `yarn install`
-3. 替换代码(src/app.ts)中的`token`([如何获取我的 token](https://github.com/chatrbot/chatbot#faq)),然后运行  
-   `npx ts-node src/app.ts`
+3. [获取token](https://github.com/chatrbot/chatbot#faq)
+4. 可编译后用node运行js,也可以直接用命令,记得替换成自己的token  
+   `npx ts-node src/app.ts -t {yourt_token}`
