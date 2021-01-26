@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { Parser } from 'xml2js'
 
-//消息结构体定义
+// 消息结构体定义
 type BaseResponse<T = unknown> = {
     code: number
     msg: string
@@ -37,12 +37,12 @@ export class Request {
         })
     }
 
-    //generateUrl 拼接请求地址，附带上token
+    // generateUrl 拼接请求地址，附带上token
     private generateUrl(url: string) {
         return url + '?token=' + this.token
     }
 
-    //sendTextMessage 发送文本消息
+    // sendTextMessage 发送文本消息
     async sendTextMessage(toUser: string, content: string, atList: string[]) {
         try {
             const rsp = await this.http.post(
@@ -61,7 +61,7 @@ export class Request {
         }
     }
 
-    //sendPicMessage 发送图片消息
+    // sendPicMessage 发送图片消息
     async sendPicMessage(toUser: string, imgUrl: string) {
         try {
             const rsp = await this.http.post(
@@ -79,9 +79,9 @@ export class Request {
         }
     }
 
-    //sendEmojiMessage 转发表情消息
-    //emojiMd5 从收到的xml中可以解析md5字段
-    //emojiLen 从收到的xml可以解析len字段
+    // sendEmojiMessage 转发表情消息
+    // emojiMd5 从收到的xml中可以解析md5字段
+    // emojiLen 从收到的xml可以解析len字段
     async sendEmojiMessage(toUser: string, emojiMd5: string, emojiLen: string) {
         try {
             const rsp = await this.http.post(
@@ -100,7 +100,7 @@ export class Request {
         }
     }
 
-    //sendVideoMessage 发送视频消息
+    // sendVideoMessage 发送视频消息
     async sendVideoMessage(toUser: string, videoUrl: string, thumbUrl: string) {
         try {
             const rsp = await this.http.post(
@@ -119,7 +119,7 @@ export class Request {
         }
     }
 
-    //sendVoiceMessage 发送音频消息
+    // sendVoiceMessage 发送音频消息
     async sendVoiceMessage(toUser: string, silkUrl: string) {
         try {
             const rsp = await this.http.post(
@@ -137,7 +137,7 @@ export class Request {
         }
     }
 
-    //downloadVideo 下载视频消息
+    // downloadVideo 下载视频消息
     async downloadVideo(xml: string) {
         try {
             const rsp = await this.http.post<
@@ -153,7 +153,7 @@ export class Request {
         }
     }
 
-    //downloadVoice 下载音频消息
+    // downloadVoice 下载音频消息
     async downloadVoice(newMsgId: string, xml: string) {
         try {
             const rsp = await this.http.post<
@@ -170,7 +170,7 @@ export class Request {
         }
     }
 
-    //downloadPic 下载图片消息
+    // downloadPic 下载图片消息
     async downloadPic(xml: string) {
         try {
             const rsp = await this.http.post<BaseResponse<DownloadPicResponse>>(
@@ -187,7 +187,7 @@ export class Request {
         }
     }
 
-    //downloadEmoji 下载emoji/动态表情
+    // downloadEmoji 下载emoji/动态表情
     downloadEmoji(xml: string) {
         const parser = new Parser({ strict: false })
         let cdnUrl = ''
@@ -201,7 +201,7 @@ export class Request {
         return cdnUrl
     }
 
-    //parseEmoji 解析表情消息用来转发
+    // parseEmoji 解析表情消息用来转发
     parseEmojiXML(xml: string) {
         const parser = new Parser({ strict: false })
         let info: any = null
@@ -218,7 +218,7 @@ export class Request {
         return info
     }
 
-    //parseEmoji 解析表情消息用来转发
+    // parseEmoji 解析表情消息用来转发
     async delGroupMembers(group: string, members: string[]) {
         try {
             const rsp = await this.http.post(

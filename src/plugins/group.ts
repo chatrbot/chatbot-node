@@ -21,25 +21,17 @@ export class GroupPlugin extends Plugin {
         if (msg.msgType === PushMsgType.Message) {
             const data = msg.data as UserMessage
             const keyword = '踢'
+            /**
+             * 必须是文本消息
+             * 必须是群内消息
+             * 必须匹配到触发关键字
+             */
             if (
                 data.msgType === MsgType.MsgTypeText &&
                 IsGroupMessage(data.fromUser) &&
                 SplitAtContent(data.groupContent) === keyword
             ) {
-                if (!IsGroupMember(data.groupMemberRole)) {
-                    this.bot
-                        .delGroupMembers(data.fromUser, data.atList)
-                        .then(() => {
-                            this.bot.sendText(
-                                data.fromUser,
-                                '@' + data.groupMemberNickname + ' 搞定了老板',
-                                [data.groupMember]
-                            )
-                        })
-                        .catch((err) => {
-                            console.log(err)
-                        })
-                } else {
+                if (IsGroupMember(data.groupMemberRole)) {
                     this.bot
                         .sendText(
                             data.fromUser,
@@ -51,7 +43,19 @@ export class GroupPlugin extends Plugin {
                         .catch((err) => {
                             console.log(err)
                         })
+                    return
                 }
+                this.bot
+                    .delGroupMembers(data.fromUser, data.atList)
+                    .then(() => {
+                        this.bot
+                            .sendText(
+                                data.fromUser,
+                                '@' + data.groupMemberNickname + ' 搞定了老板',
+                                [data.groupMember]
+                            )
+                            .catch((err) => console.log(err))
+                    })
             }
         }
         if (msg.msgType === PushMsgType.Event) {

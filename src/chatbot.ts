@@ -19,10 +19,10 @@ export class ChatBot {
     }
 
     async start() {
-        await this.init()
+        await this.connect()
     }
 
-    async init() {
+    async connect() {
         try {
             console.log('开始连接服务器')
             this.ws = new WebSocket(
@@ -49,9 +49,6 @@ export class ChatBot {
                 })
             })
             this.ws.on('close', async (code: number) => {
-                if (this.ws) {
-                    this.ws.close()
-                }
                 if (this.heartBeatTimer) {
                     clearInterval(this.heartBeatTimer)
                 }
@@ -60,7 +57,7 @@ export class ChatBot {
                     setTimeout(() => resolve(null), 5000)
                 )
                 console.log('开始重连')
-                await this.init()
+                await this.connect()
             })
             this.ws.on('error', (err: Error) => {
                 console.log('on error:', err)
@@ -70,7 +67,7 @@ export class ChatBot {
             await new Promise((resolve) =>
                 setTimeout(() => resolve(null), 5000)
             )
-            await this.init()
+            await this.connect()
         }
     }
 

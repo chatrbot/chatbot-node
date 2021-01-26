@@ -15,9 +15,9 @@ if (!program.token || !program.host) {
     program.help()
     process.exit()
 }
-//机器人主体，包含了一系列的主动接口调用方法
+// 机器人主体，包含了一系列的主动接口调用方法
 const bot = new ChatBot(program.host, program.token)
-//插件
+// 插件
 const group = new GroupPlugin(bot)
 
 bot.use(group)

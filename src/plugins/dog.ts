@@ -1,4 +1,4 @@
-//回复关键词 舔狗，会回复一个舔狗段子
+// 回复关键词 舔狗，会回复一个舔狗段子
 import { ChatBot } from '../chatbot'
 import axios from 'axios'
 import { Plugin } from '../plugins'
