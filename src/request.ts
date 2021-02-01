@@ -137,6 +137,49 @@ export class Request {
         }
     }
 
+    // sendMiniProgramMessage 发送小程序消息
+    async sendMiniProgramMessage(
+        toUser: string,
+        thumbUrl: string,
+        title: string,
+        des: string,
+        url: string,
+        sourceUserName: string,
+        sourceDisplayName: string,
+        username: string,
+        appid: string,
+        type: number,
+        version: number,
+        iconUrl: string,
+        pagePath: string
+    ) {
+        try {
+            const rsp = await this.http.post(
+                this.generateUrl('/api/v1/chat/sendSmallApp'),
+                {
+                    toUser,
+                    thumbUrl,
+                    title,
+                    des,
+                    url,
+                    sourceUserName,
+                    sourceDisplayName,
+                    username,
+                    appid,
+                    type,
+                    version,
+                    iconUrl,
+                    pagePath
+                }
+            )
+            if (rsp) {
+                return rsp
+            }
+        } catch (err) {
+            throw new Error('发送小程序息失败:' + err)
+        }
+    }
+
     // downloadVideo 下载视频消息
     async downloadVideo(xml: string) {
         try {

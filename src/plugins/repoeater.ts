@@ -1,4 +1,6 @@
-//消息复读机 会重复用户发送消息的 包括群内和群外
+/**
+ * 消息复读机 会重复用户发送消息的 包括群内和群外
+ */
 import { ChatBot } from '../chatbot'
 import { Plugin } from '../plugins'
 import { MsgType, PushMessage, PushMsgType, UserMessage } from '../define'

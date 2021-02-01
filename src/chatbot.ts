@@ -95,6 +95,38 @@ export class ChatBot {
         return this.request.sendVoiceMessage(toUser, silkUrl)
     }
 
+    sendMiniProgram(
+        toUser: string,
+        thumbUrl: string,
+        title: string,
+        des: string,
+        url: string,
+        sourceUsername: string,
+        sourceDisplayName: string,
+        username: string,
+        appid: string,
+        type: number,
+        version: number,
+        iconUrl: string,
+        pagePath: string
+    ) {
+        return this.request.sendMiniProgramMessage(
+            toUser,
+            thumbUrl,
+            title,
+            des,
+            url,
+            sourceUsername,
+            sourceDisplayName,
+            username,
+            appid,
+            type,
+            version,
+            iconUrl,
+            pagePath
+        )
+    }
+
     downloadPic(xml: string) {
         return this.request.downloadPic(xml)
     }

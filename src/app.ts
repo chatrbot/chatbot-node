@@ -1,6 +1,7 @@
 import { ChatBot } from './chatbot'
 import { GroupPlugin } from './plugins/'
 import * as Commander from 'commander'
+import { MiniProgramPlugin } from './plugins/miniprogram'
 
 // 从这里获取token https://github.com/chatrbot/chatbot#faq
 // 启动命令 npx ts-node app.ts -token your_token
@@ -19,7 +20,8 @@ if (!program.token || !program.host) {
 const bot = new ChatBot(program.host, program.token)
 // 插件
 const group = new GroupPlugin(bot)
+const miniProgram = new MiniProgramPlugin(bot)
 
-bot.use(group)
+bot.use(group, miniProgram)
 
 bot.start()
